@@ -18,7 +18,7 @@ var PostHolder = React.createClass({
       datatype: 'json',
       success: function(data) {
         _this.setState({ data: data.data.children })
-        console.log(_this.state.data);
+        console.log(_this.state.data[0].data.title);
       }
     });
   },
@@ -31,7 +31,6 @@ var PostHolder = React.createClass({
     return (
       <div className="postHolder">
         <PostList data={this.state.data} />
-        Why hello there!
       </div>
     );
   }
@@ -43,8 +42,7 @@ var PostList = React.createClass({
   render: function() {
     var postNodes = this.props.data.map(function(post, index) {
       return (
-        <Post key={index} title={post.data.title}></Post>
-
+        <Posts key={index} author={post.data.author}>{post.data.title}</Posts>
       );
     })
     return (
@@ -56,15 +54,33 @@ var PostList = React.createClass({
 
 });
 
-var Post = React.createClass({
+var Posts = React.createClass({
 
   render: function() {
     return(
-      <div className="post">
-        <h2 className="postTitle">
-          {this.props.author}
-        </h2>
+      <div className="posts">
+        <Title className="title">{this.props.title}</Title>
+        <Author className="author">{this.props.author}</Author>
       </div>
+    )
+  }
+
+});
+
+var Author = React.createClass({
+  render: function() {
+    return(
+      <h3 className="authorName">{this.props.data}author goes here</h3>
+    )
+  }
+
+});
+
+var Title = React.createClass({
+
+  render: function() {
+    return(
+      <p className="title">{this.props.title}title goes here</p>
     )
   }
 
